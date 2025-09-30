@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Belated Birthday Wish!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* --- Cake Styles --- */
+        .cake-container {
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cake {
+            position: relative;
+            width: 250px;
+            height: 180px;
+            margin-top: 30px;
+        }
+
+        .plate {
+            width: 300px;
+            height: 20px;
+            background-color: #d1d5db; /* gray-300 */
+            border-radius: 50%;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .layer {
+            position: absolute;
+            width: 100%;
+            height: 60px;
+            background-color: #f7b9a1;
+            border-radius: 50% / 20%;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1);
+        }
+
+        .layer-middle {
+            bottom: 60px;
+            background-color: #e5a086;
+        }
+
+        .layer-bottom {
+            bottom: 0;
+            background-color: #d1876b;
+        }
+
+        .icing {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #fef0f4;
+            border-radius: 50% / 20%;
+            z-index: 1;
+        }
+
+        /* --- Candle Styles --- */
+        .candle {
+            position: absolute;
+            width: 10px;
+            height: 40px;
+            background: repeating-linear-gradient(45deg, #f87171, #f87171 5px, #fca5a5 5px, #fca5a5 10px);
+            top: -60px; /* on top of icing */
+            z-index: 2;
+            border-radius: 4px 4px 0 0;
+            transform-origin: bottom;
+        }
+
+        .candle:nth-child(1) { left: 20%; }
+        .candle:nth-child(2) { left: 40%; }
+        .candle:nth-child(3) { left: 60%; }
+        .candle:nth-child(4) { left: 80%; }
+
+        /* --- Flame & Smoke Animation --- */
+        .flame {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: #facc15; /* yellow-400 */
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: -20px;
+            left: 0px;
+            animation: flicker 1.5s ease-in-out infinite;
+            transform-origin: bottom;
+            transition: all 0.5s ease;
+        }
+
+        .smoke {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: rgba(200, 200, 200, 0.5);
+            border-radius: 50%;
+            top: -40px;
+            left: 0;
+            opacity: 0;
+            animation: smoke-rise 4s ease-in-out infinite;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes flicker {
+            0%, 100% { transform: scaleY(1) scaleX(1); opacity: 1; }
+            50% { transform: scaleY(0.95) scaleX(1.05); opacity: 0.8; }
+        }
+
+        @keyframes smoke-rise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            25% { opacity: 1; }
+            100% { transform: translateY(-50px) scale(3); opacity: 0; }
+        }
+
+        /* Blown out state */
+        .blown-out .flame {
+            animation: none;
+            opacity: 0;
+            transform: scale(0);
+        }
+        .blown-out .smoke {
+            animation: none;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body class="bg-gradient-to-tr from-pink-300 via-rose-300 to-purple-400 min-h-screen flex items-center justify-center p-4">
+
+    <!-- Greeting Modal -->
+    <div id="greetingModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center transform transition-all scale-100 duration-300">
+            <h2 class="text-3xl font-pacifico text-rose-500 mb-4">A Message For You!</h2>
+            <p class="text-gray-700 text-lg mb-6">
+                Accept Post Birthday Greetings from Muhmmad(Miaan Saab lol)
+            </p>
+            <button id="acceptButton" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full hover:bg-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 transform hover:scale-105 transition-transform duration-200">
+                Accept
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content: Cake and Button -->
+    <main id="cake-container" class="cake-container">
+        <div class="cake">
+            <div class="plate"></div>
+            <div class="layer layer-bottom"></div>
+            <div class="layer layer-middle"></div>
+            <div class="icing"></div>
+            <div class="candles">
+                <div class="candle"><div class="flame"><div class="smoke"></div></div></div>
+                <div class="candle"><div class="flame"><div class="smoke"></div></div></div>
+                <div class="candle"><div class="flame"><div class="smoke"></div></div></div>
+                <div class="candle"><div class="flame"><div class="smoke"></div></div></div>
+            </div>
+        </div>
+
+        <button id="blowCandlesButton" class="mt-20 bg-purple-600 text-white font-bold py-4 px-10 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transform hover:scale-105 transition-transform duration-200 text-xl">
+            Blow the Candles
+        </button>
+        
+        <p id="birthdayMessage" class="font-pacifico text-white text-5xl mt-16 opacity-0 transition-opacity duration-1000">Happy Birthday!</p>
+    </main>
+
+    <!-- Background Music -->
+    <!-- Using a gentle, royalty-free kalimba tune -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Get elements from the DOM
+        const greetingModal = document.getElementById('greetingModal');
+        const acceptButton = document.getElementById('acceptButton');
+        const cakeContainer = document.getElementById('cake-container');
+        const blowCandlesButton = document.getElementById('blowCandlesButton');
+        const birthdayMessage = document.getElementById('birthdayMessage');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const modalContent = greetingModal.querySelector('div');
+
+        // Event listener for the 'Accept' button
+        acceptButton.addEventListener('click', () => {
+            // Fade out the modal
+            modalContent.style.transform = 'scale(0.8)';
+            greetingModal.style.opacity = '0';
+
+            // Wait for fade out animation to finish
+            setTimeout(() => {
+                greetingModal.style.display = 'none';
+                // Display the cake with a flex style
+                cakeContainer.style.display = 'flex';
+                // Play music (requires user interaction, which this click provides)
+                backgroundMusic.play().catch(error => {
+                    console.log("Audio playback failed. This is common if there wasn't user interaction first.", error);
+                });
+            }, 300); // Matches the duration-300 class
+        });
+
+        // Event listener for the 'Blow the Candles' button
+        blowCandlesButton.addEventListener('click', () => {
+            // Add the 'blown-out' class to the cake container to extinguish flames
+            cakeContainer.classList.add('blown-out');
+
+            // Hide the button
+            blowCandlesButton.style.display = 'none';
+
+            // Show the final birthday message
+            setTimeout(() => {
+                 birthdayMessage.style.opacity = '1';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
