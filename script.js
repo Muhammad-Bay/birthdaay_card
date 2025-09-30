@@ -1,45 +1,37 @@
-function startCelebration() {
-  // 🎉 Confetti burst
-  var duration = 3 * 1000;
-  var end = Date.now() + duration;
+// 🎉 Confetti Effect 🎉
+function createConfetti() {
+  const confetti = document.createElement("div");
+  confetti.classList.add("confetti");
+  confetti.style.left = Math.random() * 100 + "vw";
+  confetti.style.animationDuration = Math.random() * 3 + 2 + "s"; // 2-5s fall
+  confetti.innerText = "🎉";
+  document.body.appendChild(confetti);
 
-  (function frame() {
-    confetti({
-      particleCount: 5,
-      angle: 60,
-      spread: 55,
-      origin: { x: 0 }
-    });
-    confetti({
-      particleCount: 5,
-      angle: 120,
-      spread: 55,
-      origin: { x: 1 }
-    });
+  setTimeout(() => confetti.remove(), 5000);
+}
 
-    if (Date.now() < end) {
-      requestAnimationFrame(frame);
-    }
-  }());
+// Generate confetti repeatedly
+setInterval(createConfetti, 300);
 
-  // 🎈 Add balloons
-  for (let i = 0; i < 10; i++) {
-    let balloon = document.createElement("div");
-    balloon.classList.add("balloon");
-    balloon.style.left = Math.random() * 100 + "vw";
-    balloon.style.background = getRandomColor();
-    balloon.style.animationDuration = (6 + Math.random() * 4) + "s";
-    document.body.appendChild(balloon);
+// CSS for confetti
+const style = document.createElement('style');
+style.innerHTML = `
+.confetti {
+  position: fixed;
+  top: -10px;
+  font-size: 24px;
+  animation: fall linear forwards;
+}
 
-    // remove balloon after animation
-    setTimeout(() => {
-      balloon.remove();
-    }, 10000);
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
   }
-}
+}`;
+document.head.appendChild(style);
 
-// 🎨 Random balloon colors
-function getRandomColor() {
-  const colors = ["#ff4e50", "#f9d423", "#24c6dc", "#3a1c71", "#ff6a00", "#00b09b"];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
+// Auto start background music after user interaction (for browser rules)
+document.body.addEventListener("click", () => {
+  const music = document.getElementById("bg-music");
+  music.play();
+}, { once: true });
