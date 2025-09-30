@@ -2,30 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Card</title>
+  <title>Happy Birthday 🎉</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎉 Accept the Post Birthday Greetings from The best <span class="highlight">"Mian Saab lol"</span> 🎉</h1>
-  
-  <!-- Birthday Cake -->
+  <h1>Accept the Post Birthday Greetings from The best "Mian Saab lol"</h1>
+
+  <!-- Cake container -->
   <div class="cake" id="cake">
-    <div class="plate"></div>
-    <div class="layer layer1"></div>
-    <div class="layer layer2"></div>
-    <div class="layer layer3"></div>
-    <div class="candle">
-      <div class="flame" id="flame"></div>
-      <div class="smoke" id="smoke"></div>
+    <div class="candles">
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="smoke"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="smoke"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="smoke"></div>
+      </div>
     </div>
   </div>
 
-  <!-- Background Music -->
-  <audio id="bg-music" autoplay loop>
-    <source src="birthday.mp3" type="audio/mpeg">
+  <!-- Control buttons -->
+  <div class="controls">
+    <button id="blowBtn">Blow Candles 🎂</button>
+    <button id="hideBtn">Hide Cake 🙈</button>
+  </div>
+
+  <!-- Background music -->
+  <audio id="music" autoplay loop controls>
+    <source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid" type="audio/midi">
+    Your browser does not support the audio tag.
   </audio>
 
+  <!-- Lights animation -->
+  <div class="lights"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
