@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday 🎉</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#FFDEE9;
+      --bg2:#B5FFFC;
+      --card-bg: rgba(255,255,255,0.12);
+      --glass: rgba(255,255,255,0.06);
+      --accent: #ff6b6b;
+    }
+    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at 10% 10%, #ffe29f, transparent 15%),
+                  linear-gradient(135deg,var(--bg1),var(--bg2));
+      overflow:hidden;
+      color:#111;
+    }
+
+    .card{
+      position:relative;
+      width:min(920px,94%);
+      padding:36px;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      box-shadow: 0 10px 30px rgba(8,8,30,0.25);
+      backdrop-filter: blur(6px) saturate(120%);
+      text-align:center;
+      overflow:visible;
+    }
+
+    h1{
+      margin: 6px 0 0;
+      font-size: clamp(28px, 4.8vw, 56px);
+      letter-spacing: -1px;
+      color: #fff;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+    }
+    .name {
+      color: #fff;
+      font-weight:800;
+      background: linear-gradient(90deg,#fff 0%, #ffd6a5 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    p.lead { margin:8px 0 18px; color: #fffdfd; opacity:0.95; }
+
+    .controls{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+    .controls input[type="text"]{
+      padding:10px 12px; border-radius:10px; border: none; min-width:220px;
+      outline: none; font-size:14px;
+    }
+    .btn{
+      padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:600;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+    }
+    .btn-primary{ background: linear-gradient(90deg,#ff6b6b,#ffb86b); color:#fff; }
+    .btn-muted{ background: var(--glass); color:#fff; }
+
+    .small { font-size:13px; opacity:0.85; margin-top:10px; color:#fff; }
+
+    /* Confetti pieces */
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 14px;
+      opacity:0.95;
+      pointer-events:none;
+      z-index:3000;
+      transform-origin:center;
+      border-radius:2px;
+    }
+    @keyframes confettiFall {
+      to { transform: translateY(120vh) rotate(720deg); opacity:0.95; }
+    }
+
+    /* Floating balloons */
+    .balloon{
+      position: fixed;
+      bottom:-160px;
+      width: 72px;
+      height: 94px;
+      border-radius: 46% 54% 50% 50% / 48% 48% 52% 52%;
+      box-shadow: inset -6px -8px 14px rgba(0,0,0,0.12);
+      z-index:1200;
+      transform-origin:center;
+    }
+    .balloon:after{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:-56px;
+      width:2px;
+      height:52px;
+      background: rgba(0,0,0,0.08);
+      border-radius:2px;
+    }
+    @keyframes floatUp {
+      to { transform: translateY(-140vh) rotate(-20deg); opacity:1; }
+    }
+
+    /* cake */
+    .cake {
+      margin: 18px auto 6px;
+      width:160px;
+      height:110px;
+      position:relative;
+      z-index:10;
+    }
+    .cake .layer{
+      width:100%;
+      height:36%;
+      border-radius:14px;
+      background:linear-gradient(180deg,#fff5e6,#ffd6b3);
+      box-shadow:0 6px 18px rgba(0,0,0,0.18);
+      margin-bottom:8px;
+    }
+    .cake .icing{
+      position:absolute; left:12px; right:12px; top:6px; height:28px;
+      background: linear-gradient(180deg,#ffc6e6,#ff8fc6);
+      border-radius:12px;
+      box-shadow:inset 0 -6px 12px rgba(255,255,255,0.1);
+    }
+    .candles{ position:absolute; left:50%; transform:translateX(-50%); top:-22px; display:flex; gap:8px; }
+
+    .candle{ width:6px; height:26px; background: linear-gradient(180deg,#f8f9fa,#ffc); border-radius:4px; position:relative;}
+    .flame{ position:absolute; top:-10px; left:50%; transform:translateX(-50%); width:12px; height:14px; border-radius:50%;
+            background: radial-gradient(circle at 35% 30%, #fff, #ffd24a 35%, #ff8c00 60%); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); animation:flicker 1s infinite; }
+    @keyframes flicker { 0%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(0.95);}100%{transform:translateX(-50%) scale(1);} }
+
+    /* top-left / top-right decorative */
+    .corner{
+      position:fixed; top:16px; z-index:5; opacity:0.9;
+    }
+    .corner.right{ right:16px; transform: rotate(20deg); }
+
+    /* responsive */
+    @media (max-width:520px){
+      .controls input[type="text"]{ min-width:140px; }
+      .cake{ width:120px; height:82px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-live="polite">
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <h1>🎉 <span id="greeting">Happy Birthday,</span> <span id="name" class="name">Friend</span>!</h1>
+      <p class="lead" id="subtext">Wishing you a day filled with love, cake & surprises 🎂</p>
+
+      <div class="cake" aria-hidden="true">
+        <div class="icing"></div>
+        <div class="candles">
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+        </div>
+        <div class="layer" style="height:42%;"></div>
+        <div class="layer"></div>
+      </div>
+
+      <div class="controls" style="margin-top:6px;">
+        <input id="nameInput" type="text" placeholder="Type a name to create a personalized link" aria-label="Name to personalize" />
+        <button id="createLink" class="btn btn-primary" title="Make & copy link">Create & Copy Link</button>
+        <button id="surprise" class="btn btn-muted" title="Trigger extra confetti">Surprise!</button>
+        <button id="musicBtn" class="btn btn-muted" title="Play / Pause music">Play Music</button>
+      </div>
+
+      <div class="small">Tip: Open the link you share and it will say "Happy Birthday, NAME".</div>
+    </div>
+  </div>
+
+  <!-- optional audio: put a file named "party.mp3" in the same folder as index.html -->
+  <audio id="bgm" src="party.mp3" loop preload="auto"></audio>
+
+  <script>
+    // Utility: read query params
+    function getParam(k){ return new URLSearchParams(location.search).get(k); }
+
+    // Set name and optional message from URL
+    const nameEl = document.getElementById('name');
+    const greetingEl = document.getElementById('greeting');
+    const subtextEl = document.getElementById('subtext');
+    const paramName = getParam('name');
+    const paramMessage = getParam('message');
+
+    const defaultName = "Friend";
+    const displayName = paramName ? decodeURIComponent(paramName) : defaultName;
+    nameEl.textContent = displayName;
+
+    if(paramMessage){
+      subtextEl.textContent = decodeURIComponent(paramMessage);
+    }
+
+    // Confetti creator
+    function createConfettiPiece(x){
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      const size = 6 + Math.random()*12;
+      el.style.width = size + 'px';
+      el.style.height = (size*1.2) + 'px';
+      el.style.left = (typeof x === 'number' ? x : (Math.random() * 100)) + 'vw';
+      el.style.background = `hsl(${Math.random()*360} 90% 60%)`;
+      el.style.top = (-20 - Math.random()*40) + 'px';
+      el.style.transform = `rotate(${Math.random()*360}deg)`;
+      const dur = 2200 + Math.random()*2600;
+      el.style.animation = `confettiFall ${dur}ms linear forwards`;
+      el.style.zIndex = 4000;
+      document.body.appendChild(el);
+      setTimeout(()=> el.remove(), dur + 200);
+      return el;
+    }
+
+    // Periodic light confetti
+    let confettiInterval = setInterval(()=> {
+      for(let i=0;i<6;i++) createConfettiPiece();
+    }, 800);
+
+    // Surprise burst
+    document.getElementById('surprise').addEventListener('click', ()=> {
+      for(let i=0;i<120;i++){
+        setTimeout(()=> createConfettiPiece(10 + Math.random()*80), i*8);
+      }
+    });
+
+    // Balloons generator
+    function createBalloon(leftPct){
+      const b = document.createElement('div');
+      b.className = 'balloon';
+      const hue = Math.floor(Math.random()*360);
+      b.style.background = `linear-gradient(180deg, hsl(${hue} 85% 75%), hsl(${hue} 80% 55%))`;
+      const size = 60 + Math.random()*36;
+      b.style.width = size + 'px';
+      b.style.height = Math.round(size*1.25) + 'px';
+      b.style.left = (typeof leftPct === 'number' ? leftPct : Math.random()*86) + 'vw';
+      const duration = 9000 + Math.random()*9000;
+      b.style.animation = `floatUp ${duration}ms linear forwards`;
+      b.style.zIndex = 2000;
+      document.body.appendChild(b);
+      // remove after animation
+      setTimeout(()=> b.remove(), duration + 200);
+    }
+
+    // Add a few balloons every now and then
+    setInterval(()=> {
+      createBalloon(Math.random()*78);
+      if(Math.random() > 0.7) createBalloon(Math.random()*78);
+    }, 2300);
+
+    // Create & copy personalized link
+    const createBtn = document.getElementById('createLink');
+    createBtn.addEventListener('click', async () => {
+      const raw = document.getElementById('nameInput').value.trim();
+      if(!raw){
+        alert('Type a name first (e.g., "Aisha")');
+        return;
+      }
+      const safeName = encodeURIComponent(raw);
+      const page = location.origin + location.pathname + '?name=' + safeName;
+      try{
+        await navigator.clipboard.writeText(page);
+        createBtn.textContent = 'Link copied ✅';
+        setTimeout(()=> createBtn.textContent = 'Create & Copy Link', 1800);
+      }catch(e){
+        // fallback
+        prompt('Copy this link:', page);
+      }
+    });
+
+    // Music play/pause (autoplay is blocked on many browsers — user must click)
+    const musicBtn = document.getElementById('musicBtn');
+    const bgm = document.getElementById('bgm');
+    let musicPlaying = false;
+    musicBtn.addEventListener('click', async () => {
+      if(!bgm.src || bgm.src.endsWith('/')) {
+        alert('No music file found. Upload a file named "party.mp3" next to index.html if you want background music.');
+        return;
+      }
+      try{
+        if(!musicPlaying){
+          await bgm.play();
+          musicPlaying = true;
+          musicBtn.textContent = 'Pause Music';
+        }else{
+          bgm.pause();
+          musicPlaying = false;
+          musicBtn.textContent = 'Play Music';
+        }
+      }catch(err){
+        alert('Browser blocked autoplay — please allow or click Play again.');
+      }
+    });
+
+    // Accessibility: keyboard trigger for surprise
+    document.addEventListener('keydown', e=>{
+      if(e.key === 'Enter'){ document.getElementById('surprise').click(); }
+    });
+
+    // When user arrives by link, small burst for impact
+    window.addEventListener('load', ()=> {
+      // small celebratory burst
+      for(let i=0;i<40;i++) setTimeout(()=> createConfettiPiece(10 + Math.random()*80), i*9);
+    });
+  </script>
+</body>
+</html>
