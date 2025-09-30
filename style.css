@@ -1,99 +1,25 @@
-body {
-  text-align: center;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  background: linear-gradient(to right, #ffdde1, #ee9ca7);
-  color: #fff;
-  margin: 0;
-  padding: 20px;
-}
+const blowBtn = document.getElementById("blowBtn");
+const hideBtn = document.getElementById("hideBtn");
+const cake = document.getElementById("cake");
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
-}
+blowBtn.addEventListener("click", () => {
+  const flames = document.querySelectorAll(".flame");
+  const smokes = document.querySelectorAll(".smoke");
 
-.highlight {
-  color: yellow;
-  font-weight: bold;
-}
+  flames.forEach(flame => flame.style.display = "none");
+  smokes.forEach(smoke => {
+    smoke.classList.add("show");
+    setTimeout(() => smoke.classList.remove("show"), 2000);
+  });
 
-/* Cake Styling */
-.cake {
-  position: relative;
-  margin: 50px auto;
-  width: 200px;
-  height: 200px;
-}
+  // Confetti
+  confetti({
+    particleCount: 150,
+    spread: 100,
+    origin: { y: 0.7 }
+  });
+});
 
-.plate {
-  width: 220px;
-  height: 40px;
-  background: #eee;
-  border-radius: 50%;
-  position: absolute;
-  bottom: -20px;
-  left: -10px;
-}
-
-.layer {
-  width: 200px;
-  height: 60px;
-  border-radius: 15px;
-  background: #ff9aa2;
-  position: absolute;
-  left: 0;
-}
-
-.layer1 { bottom: 0; background: #ff9aa2; }
-.layer2 { bottom: 60px; background: #ffb347; }
-.layer3 { bottom: 120px; background: #a29bfe; }
-
-.candle {
-  position: absolute;
-  left: 50%;
-  top: -40px;
-  margin-left: -10px;
-  width: 20px;
-  height: 60px;
-  background: #fff;
-  border-radius: 5px;
-}
-
-.flame {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  margin-left: -10px;
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle, yellow 60%, orange 80%, transparent 100%);
-  border-radius: 50%;
-  animation: flicker 0.2s infinite;
-}
-
-@keyframes flicker {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-
-/* Smoke effect (hidden by default) */
-.smoke {
-  position: absolute;
-  top: -25px;
-  left: 50%;
-  margin-left: -15px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(200, 200, 200, 0.5);
-  opacity: 0;
-  animation: none;
-}
-
-@keyframes puff {
-  0% { transform: scale(0.5) translateY(0); opacity: 0.7; }
-  100% { transform: scale(2) translateY(-50px); opacity: 0; }
-}
-
+hideBtn.addEventListener("click", () => {
+  cake.style.display = "none";
+});
